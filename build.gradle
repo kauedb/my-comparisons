@@ -1,0 +1,50 @@
+buildscript {
+	repositories {
+		 maven { url "http://repo.springsource.org/plugins-release" }
+	}
+}
+
+configure(allprojects){ project ->
+	group = "com.kauedb"
+	version = "1.0.0"
+	
+	apply plugin:"java"
+	apply plugin:"maven"
+
+	ext {
+		commonsLangVersion = '2.6'
+		guavaVersion = '16.0.1'
+	}
+	
+	compileJava {
+                sourceCompatibility=1.7
+                targetCompatibility=1.7
+        }
+
+        compileTestJava {
+                sourceCompatibility=1.7
+                targetCompatibility=1.7
+        }
+
+        sourceSets.test.resources.srcDirs = ["src/test/resources", "src/test/java"]
+	
+	repositories {
+                maven { url "http://repo.spring.io/libs-release" }
+                maven { url "http://repo.spring.io/milestone" }  // for AspectJ 1.8.0.M1
+                maven { url "https://repository.apache.org/content/repositories/releases" }  // tomcat 8
+                // maven { url "https://repository.apache.org/content/repositories/snapshots" }  // tomcat 8 snapshots
+                maven { url "https://maven.java.net/content/repositories/releases" }  // javax.websocket, tyrus
+                maven { url "https://oss.sonatype.org/content/repositories/releases" }  // javax.cache
+        }
+
+}
+
+project("guava_vs_commons_lang"){
+
+	dependencies {
+		compile "commons-lang:commons-lang:${commonsLangVersion}"
+		compile "com.google.guava:guava:${guavaVersion}"
+            
+	}
+
+}
